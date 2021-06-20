@@ -1,0 +1,154 @@
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Suplayer extends CI_Controller
+{
+    
+        
+    function __construct()
+    {
+        parent::__construct();
+        chek_session();
+        date_default_timezone_set("Asia/Bangkok");
+        $this->load->model('Suplayer_model');
+        $this->load->library('form_validation');
+    }
+
+    public function index()
+    {
+        $suplayer = $this->Suplayer_model->get_all();
+
+        $data = array(
+            'suplayer_data' => $suplayer
+        );
+
+        $this->template->load('admin/template','admin/suplayer_list', $data);
+    }
+
+    public function read($id) 
+    {
+        $row = $this->Suplayer_model->get_by_id($id);
+        if ($row) {
+            $data = array(
+		'kd_suplayer' => $row->kd_suplayer,
+		'nama_suplayer' => $row->nama_suplayer,
+		'alamat' => $row->alamat,
+		'no_telp' => $row->no_telp,
+		'keterangan' => $row->keterangan,
+	    );
+            $this->template->load('admin/template','admin/suplayer_read', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('suplayer'));
+        }
+    }
+
+    public function create() 
+    {
+        $data = array(
+            'button' => 'Create',
+            'action' => site_url('suplayer/create_action'),
+	    'kd_suplayer' => set_value('kd_suplayer'),
+	    'nama_suplayer' => set_value('nama_suplayer'),
+	    'alamat' => set_value('alamat'),
+	    'no_telp' => set_value('no_telp'),
+	    'keterangan' => set_value('keterangan'),
+	);
+        $this->template->load('admin/template','admin/suplayer_form', $data);
+    }
+    
+    public function create_action() 
+    {
+        $this->_rules();
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->create();
+        } else {
+            $data = array(
+		'nama_suplayer' => $this->input->post('nama_suplayer',TRUE),
+		'alamat' => $this->input->post('alamat',TRUE),
+		'no_telp' => $this->input->post('no_telp',TRUE),
+		'keterangan' => $this->input->post('keterangan',TRUE),
+	    );
+
+            $this->Suplayer_model->insert($data);
+            $this->session->set_flashdata('message', 'Create Record Success');
+            redirect(site_url('suplayer'));
+        }
+    }
+    
+    public function update($id) 
+    {
+        $row = $this->Suplayer_model->get_by_id($id);
+
+        if ($row) {
+            $data = array(
+                'button' => 'Update',
+                'action' => site_url('suplayer/update_action'),
+		'kd_suplayer' => set_value('kd_suplayer', $row->kd_suplayer),
+		'nama_suplayer' => set_value('nama_suplayer', $row->nama_suplayer),
+		'alamat' => set_value('alamat', $row->alamat),
+		'no_telp' => set_value('no_telp', $row->no_telp),
+		'keterangan' => set_value('keterangan', $row->keterangan),
+	    );
+            $this->template->load('admin/template','admin/suplayer_form', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('suplayer'));
+        }
+    }
+    
+    public function update_action() 
+    {
+        $this->_rules();
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->update($this->input->post('kd_suplayer', TRUE));
+        } else {
+            $data = array(
+		'nama_suplayer' => $this->input->post('nama_suplayer',TRUE),
+		'alamat' => $this->input->post('alamat',TRUE),
+		'no_telp' => $this->input->post('no_telp',TRUE),
+		'keterangan' => $this->input->post('keterangan',TRUE),
+	    );
+
+            $this->Suplayer_model->update($this->input->post('kd_suplayer', TRUE), $data);
+            $this->session->set_flashdata('message', 'Update Record Success');
+            redirect(site_url('suplayer'));
+        }
+    }
+    
+    public function delete($id) 
+    {
+        $row = $this->Suplayer_model->get_by_id($id);
+
+        if ($row) {
+            $this->Suplayer_model->delete($id);
+            $this->session->set_flashdata('message', 'Delete Record Success');
+            redirect(site_url('suplayer'));
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('suplayer'));
+        }
+    }
+
+    public function _rules() 
+    {
+	$this->form_validation->set_rules('nama_suplayer', 'nama suplayer', 'trim|required');
+	$this->form_validation->set_rules('alamat', 'alamat', 'trim|required');
+	$this->form_validation->set_rules('no_telp', 'no telp', 'trim|required');
+	$this->form_validation->set_rules('keterangan', 'keterangan', 'trim|required');
+
+	$this->form_validation->set_rules('kd_suplayer', 'kd_suplayer', 'trim');
+	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    }
+
+}
+
+/* End of file Suplayer.php */
+/* Location: ./application/controllers/Suplayer.php */
+/* Please DO NOT modify this information : */
+/* Generated by Harviacode Codeigniter CRUD Generator 2019-01-21 07:17:14 */
+/* http://harviacode.com */
