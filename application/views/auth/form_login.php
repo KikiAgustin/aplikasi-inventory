@@ -40,7 +40,7 @@
       </form>
 
       <a href="<?= base_url() ?>auth_hrd/login">
-        <h5><b>- Login Sebagai Manajer -</b></h5>
+        <h5><b>- Login Sebagai Manager -</b></h5>
       </a>
 
     </div>
