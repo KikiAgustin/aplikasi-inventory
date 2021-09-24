@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2021 at 01:13 PM
+-- Generation Time: Sep 24, 2021 at 02:27 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -42,7 +42,9 @@ CREATE TABLE `absensi` (
 --
 
 INSERT INTO `absensi` (`kd_absen`, `tgl_absen`, `waktu_absen`, `kd_user`, `absen`, `keterangan`) VALUES
-(1, '2021-06-20', '14:49', 1, 'Masuk', 'Terlambat');
+(1, '2021-06-20', '14:49', 1, 'Masuk', 'Terlambat'),
+(2, '2021-06-24', '07:09', 1, 'Masuk', 'Tepat Waktu'),
+(3, '2021-06-25', '07:30', 1, 'Masuk', 'Tepat Waktu');
 
 -- --------------------------------------------------------
 
@@ -192,7 +194,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `kd_absen` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `kd_absen` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `barang`
@@ -228,7 +230,7 @@ ALTER TABLE `suplayer`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `kd_user` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `kd_user` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
